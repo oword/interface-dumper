@@ -1,5 +1,5 @@
 # interface-dumper
-Dumps all found interfaces from source engine game.
+Dumps all interfaces from source engine games.
 This has only been tested on left 4 dead 2, some changes may be necessary to make this work on other source engine games.
 
 usage:
