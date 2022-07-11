@@ -18,6 +18,7 @@ file(GLOB_RECURSE SRC
         "project/**/*.cpp" ,
         )
 
-add_library(main ${SRC})
+
+add_library(${CMAKE_PROJECT_NAME} ${SRC})
 
 add_definitions(/MP)
