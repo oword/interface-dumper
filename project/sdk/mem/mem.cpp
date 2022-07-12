@@ -59,25 +59,28 @@ void* sdk::get_module_export(const std::wstring& module, std::string function)
     return nullptr;
 }
 
-void* sdk::sig_scan(const std::wstring& module, const std::vector<BYTE>& signature)
+void* sdk::find_byte_ref(void* begin, BYTE byte)
 {
-    nt::PE_HEADER* pe_header{get_pe_header(sdk::get_module_base(module))};
-    BYTE* code_section_base{CALC_ABSOLUTE(sdk::get_module_base(module), pe_header->OptionalHeader.BaseOfCode, BYTE*)};
+    BYTE* buf{reinterpret_cast<BYTE*>(begin)};
 
-    for(size_t i{}; i < pe_header->OptionalHeader.SizeOfCode; i++)
+    while(true)
     {
-        for(size_t k{}; k < signature.size(); k++)
+        if(*buf == byte) return buf;
+        else ++buf;
+    }
+}
+
+bool sdk::byte_cmp(void* address, const std::vector<BYTE>& signature)
+{
+    for(size_t i{}; i < signature.size(); i++)
+    {
+        if(reinterpret_cast<BYTE*>(address)[i] == signature[i])
         {
-            if(code_section_base[k+i] == signature[k] || signature[k] == 0xFF)
-            {
-                if(k == signature.size()-1)
-                {
-                    return code_section_base+i;
-                }
-            }
-            else break;
+            if(i == signature.size()-1)
+                return true;
         }
+        else return false;
     }
 
-    return nullptr;
+    return false;
 }

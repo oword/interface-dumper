@@ -17,6 +17,11 @@ namespace sdk
     [[nodiscard]]
     void* get_module_export(const std::wstring& module, std::string function);
 
-    // Signatures are cached internally. If a byte must be skipped, emplace 0xFF.
-    void* sig_scan(const std::wstring& module, const std::vector<BYTE>& signature);
+    //Scans for the first instance of "byte", starting at "begin".
+    [[nodiscard]]
+    void* find_byte_ref(void* begin, BYTE byte);
+
+    //Scans address against signature, returns true if all bytes match.
+    [[nodiscard]]
+    bool byte_cmp(void* address, const std::vector<BYTE>& signature);
 }
