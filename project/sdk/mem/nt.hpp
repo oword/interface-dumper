@@ -1,4 +1,5 @@
 //definitions for some internal structures
+#pragma once
 #define WIN32_LEAN_AND_MEAN
 
 #include <Windows.h>
